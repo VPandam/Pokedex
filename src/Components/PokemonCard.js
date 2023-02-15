@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
+import { capitalizeWord } from "../Functions/functions"
 
 function PokemonCard({ name, imageUrl, id }) {
-  const [capitalizedName, setCapitalizedName] = useState("")
-  const capitalizeName = () => {
-    setCapitalizedName(name.charAt(0).toUpperCase() + name.slice(1))
-  }
-  useEffect(() => capitalizeName(), [])
   return (
     <div className="pokemon-card">
-      <Link>
+      <Link to={`/pokemon/${id}`}>
         <div className="pokemon-card-data">
           <img src={imageUrl} alt="" />
           <div className="name-container">

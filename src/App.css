@@ -3,6 +3,13 @@
   background-color: #282c34;
   box-sizing: border-box;
 }
+
+.loader-container{
+  margin-top: 50px;
+}
+
+
+/*#region listOfPokemon #*/
 .list-of-pokemon-container{
   display: flex;
   justify-content: center;
@@ -15,7 +22,9 @@
   width: 80%;
   justify-content: center;
 }
+/*#endregion listOfPôkemon #*/
 
+/*#region pokemonCard #*/
 .pokemon-card{
   width: 250px;
   height: 110px;
@@ -55,3 +64,10 @@
  .pokemon-card .name-container{
     padding-right: 5px;
  }
+ /*#endregion pokemonCard #*/
+
+
+
+
+ 
+
