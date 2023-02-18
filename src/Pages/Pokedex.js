@@ -5,10 +5,12 @@ import PokemonLogo from "../Images/Logo-Pokemon-500x313.png"
 const Pokedex = () => {
   return (
     <div>
-      <div>
-        <img width="400px" src={PokemonLogo} alt="" />
+      <div className="pokedex">
+        <div>
+          <img width="400px" src={PokemonLogo} alt="" />
+        </div>
+        <ListOfPokemon />
       </div>
-      <ListOfPokemon />
     </div>
   )
 }

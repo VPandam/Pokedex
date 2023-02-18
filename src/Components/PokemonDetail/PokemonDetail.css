@@ -1,5 +1,9 @@
 .pokemon-detail{
+  width: 75%;
+  min-height: 100vh;
   padding: 25px;
+  margin: auto;
+  background-color: orange;
 }
 .abilities-container{
     display: flex;

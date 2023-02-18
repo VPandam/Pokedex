@@ -1,21 +1,25 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { getPokemonPage, getURL } from "../Services/Api"
+import pokemonContext from "../Context/PokemonContext"
 
-//Get every pokemon data of page in pokemonList
+//Get every pokemon data of page
 //If page is null gets the first page of the api
 export const useFetchPokemon = (page = undefined) => {
-  const [loading, setLoading] = useState(true)
-  const [pokemonList, setPokemonList] = useState([])
+  const { contextState, setContextState } = useContext(pokemonContext)
   const [pokemonPage, setPokemonPage] = useState([])
 
   async function fetchPokemons(page = undefined) {
-    setLoading(true)
+    setContextState({ ...contextState, loading: true })
     let pokemonPage = []
 
     pokemonPage = page ? await getURL(page) : await fetchPokemonPage()
     setPokemonPage(pokemonPage)
-    getPokemonList(pokemonPage)
-    setLoading(false)
+    const pokemonList = await getPokemonList(pokemonPage)
+    setContextState({
+      ...contextState,
+      loading: false,
+      pokemonList: pokemonList,
+    })
   }
 
   const fetchPokemonPage = async (limit = 20, offset = 0) => {
@@ -29,15 +33,12 @@ export const useFetchPokemon = (page = undefined) => {
     const promises = pokemonPage.results.map(async (element) => {
       return await getURL(element.url)
     })
-    const data = await Promise.all(promises)
-    pokemonArray = [...data]
-    console.log(pokemonArray)
-    setPokemonList([...pokemonArray])
+    return await Promise.all(promises)
   }
 
   useEffect(() => {
     fetchPokemons(page)
   }, [page])
 
-  return { loading, pokemonList, pokemonPage }
+  return { pokemonPage }
 }

@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 import { Link } from "react-router-dom"
-import { capitalizeWord } from "../Functions/functions"
 
 function PokemonCard({ name, imageUrl, id }) {
   return (
@@ -9,10 +8,12 @@ function PokemonCard({ name, imageUrl, id }) {
         <div className="pokemon-card-data">
           <img src={imageUrl} alt="" />
           <div className="name-container">
-            <span>{name.toUpperCase()}</span>
+            <h3>{name.toUpperCase()}</h3>
           </div>
           <div className="id-container">
-            <span>{id}</span>
+            <span>
+              <b>{id}</b>
+            </span>
           </div>
         </div>
       </Link>
