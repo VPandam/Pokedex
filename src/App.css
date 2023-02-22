@@ -145,6 +145,7 @@ position: absolute;
  .pokemon-card .id-container{
     position: absolute;
     bottom: 0px; left: 0px;
+    color: black;
     padding: 5px;
     pointer-events: none;
 
