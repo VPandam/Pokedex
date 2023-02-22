@@ -7,7 +7,6 @@ export default function SectionTypeDetail({ title, data }) {
       <h2>{title}</h2>
       <ul className="types-list">
         {data?.map((data) => {
-          console.log(getPokemonTypeStyle(data.value1.toLowerCase()))
           return (
             <li
               key={data.value1}

@@ -8,7 +8,6 @@ import SectionTypeDetail from "./SectionTypeDetail"
 function PokemonDetail() {
   const { id } = useParams()
   const { data } = useGetPokemonDetailData(id)
-  console.log(data)
   return (
     <div className="container">
       <div

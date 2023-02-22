@@ -16,7 +16,6 @@ export default function ListOfPokemon() {
   const { pokemonPage } = useFetchPokemon(page)
 
   const handleClickNextPage = async () => {
-    console.log(pokemonList)
     const nextPage = pokemonPage?.next
     setPage(nextPage)
     scrollTop()
@@ -31,7 +30,6 @@ export default function ListOfPokemon() {
     ev.preventDefault()
     const searchString = ev.target.search.value.toLowerCase()
     const searchedData = await getPokemonByIdOrName(searchString)
-    console.log(searchedData)
     setContextState({ ...contextState, searchedData: searchedData })
   }
 
@@ -39,7 +37,6 @@ export default function ListOfPokemon() {
     setContextState({ ...contextState, searchedData: undefined })
   }
 
-  useEffect(() => console.log(searchedData), [searchedData])
   return (
     <>
       {loading ? (

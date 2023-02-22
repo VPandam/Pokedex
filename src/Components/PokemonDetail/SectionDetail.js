@@ -1,6 +1,5 @@
 import React from "react"
 export default function SectionDetail({ title, data }) {
-  console.log(data)
   return (
     <div className="section-container">
       <h2>{title}</h2>
