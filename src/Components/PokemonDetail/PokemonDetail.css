@@ -14,7 +14,7 @@
   align-items: center;
   border-radius: 30px;
   box-shadow: 2px 2px 2px 2px black;
-  color: ;
+
 }
 
 
@@ -57,4 +57,22 @@ margin-top: 40px;
   color: white;
   font-weight: 400;
   background-color: rgb(200, 156, 114);
+}
+
+@media (max-width: 1000px){
+  .pokemon-detail{
+    width: 70%;
+  }
+  
+}
+@media (max-width: 500px){
+  .pokemon-detail{
+    width: 75%;
+  }
+  .pokemon-detail h1 h2{
+    font-size: 20px;
+  }
+  .pokemon-detail h3{
+    font-size: 15px;
+  }
 }
