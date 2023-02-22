@@ -10,11 +10,13 @@ function App() {
   return (
     <div className="App">
       <aas.Provider value={{ contextState, setContextState }}>
-        <Routes>
-          <Route path="/" element={<Pokedex />} />
-          <Route path="/pokemon/:id" element={<PokemonDetail />} />
-          <Route path="*" element={<h1>Not found</h1>} />
-        </Routes>
+        <div className="pokedex">
+          <Routes>
+            <Route path="/" element={<Pokedex />} />
+            <Route path="/pokemon/:id" element={<PokemonDetail />} />
+            <Route path="*" element={<h1>Not found</h1>} />
+          </Routes>
+        </div>
       </aas.Provider>
     </div>
   )

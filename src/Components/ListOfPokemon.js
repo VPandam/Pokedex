@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import PokemonCard from "./PokemonCard"
 import Loader from "./Loader/Loader"
 import { useFetchPokemon } from "../Hooks/useFetchPokemon"
@@ -7,11 +7,14 @@ import PokemonContext from "../Context/PokemonContext"
 import { getPokemonByIdOrName } from "../Services/Api"
 import forthButtonImage from "../Images/backButton.png"
 import backButtonImage from "../Images/forth-button.png"
+import { useFetcher } from "react-router-dom"
+
 export default function ListOfPokemon() {
   const { contextState, setContextState } = useContext(PokemonContext)
   const { pokemonList, loading, searchedData } = contextState
   const [page, setPage] = useState(null)
   const { pokemonPage } = useFetchPokemon(page)
+
   const handleClickNextPage = async () => {
     console.log(pokemonList)
     const nextPage = pokemonPage?.next
@@ -35,6 +38,8 @@ export default function ListOfPokemon() {
   const getBackToPokemonList = () => {
     setContextState({ ...contextState, searchedData: undefined })
   }
+
+  useEffect(() => console.log(searchedData), [searchedData])
   return (
     <>
       {loading ? (
@@ -65,7 +70,11 @@ export default function ListOfPokemon() {
                 </div>
                 <div className="searched-card-container">
                   <PokemonCard
-                    imageUrl={searchedData.sprites?.front_default}
+                    imageUrl={
+                      searchedData?.sprites.other["official-artwork"]
+                        .front_default
+                    }
+                    types={searchedData.types}
                     key={searchedData.id}
                     id={searchedData.id}
                     name={searchedData.name}
@@ -79,10 +88,13 @@ export default function ListOfPokemon() {
                 </form>
                 <div className="list-of-pokemon-container">
                   <div className="list-of-pokemon">
-                    {pokemonList?.map(({ id, sprites, name }) => {
+                    {pokemonList?.map(({ id, sprites, name, types }) => {
                       return (
                         <PokemonCard
-                          imageUrl={sprites?.front_default}
+                          types={types}
+                          imageUrl={
+                            sprites?.other["official-artwork"].front_default
+                          }
                           key={id}
                           id={id}
                           name={name}

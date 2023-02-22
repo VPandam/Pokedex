@@ -1,46 +1,70 @@
-import React, { useContext, useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import { getPokemonByIdOrName } from "../../Services/Api"
-import { capitalizeWord } from "../../Functions/functions"
 import "./PokemonDetail.css"
-import pokemonContext from "../../Context/PokemonContext"
+import { useGetPokemonDetailData } from "../../Hooks/useGetPokemonDetailData"
+import SectionDetail from "./SectionDetail"
+import { getPokemonTypeStyle } from "../../Functions/functions"
+import SectionTypeDetail from "./SectionTypeDetail"
 
 function PokemonDetail() {
   const { id } = useParams()
-  const [data, setData] = useState()
-  const { contextState } = useContext(pokemonContext)
-  const { pokemonList } = contextState
-
-  const getDataFromContext = () => {
-    console.log(pokemonList)
-    const data = pokemonList?.filter((pokemon) => pokemon.id === parseInt(id))
-    const isDataInContext = data !== undefined
-    if (isDataInContext) setData(data[0])
-    return isDataInContext
-  }
-  const fetchPokemonData = async () => {
-    console.log('data is not in contextState, call api')
-    const response = await getPokemonByIdOrName(id)
-    setData(response)
-  }
-
-  useEffect(() => {
-    if (!getDataFromContext()) fetchPokemonData()
-  }, [])
-
+  const { data } = useGetPokemonDetailData(id)
+  console.log(data)
   return (
-    <div className="pokemon-detail">
-      <h1>
-        {data?.name ? capitalizeWord(data.name) : null}
-        {id}
-      </h1>
-      <div className="abilities-container">
-        <h2> Abilities: </h2>
-        <div className="abilities">
-          {data?.abilities?.map((ability, index) => {
-            console.log(ability.ability.name)
-            return <h3 key={index}>· {capitalizeWord(ability.ability.name)}</h3>
-          })}
+    <div className="container">
+      <div
+        className="pokemon-detail"
+        style={
+          data?.types[0]
+            ? {
+                background: `linear-gradient(315deg, ${getPokemonTypeStyle(
+                  data.types[0].type.name.toLowerCase()
+                )} 0%, rgba(255,255,255,1) 100%)`,
+              }
+            : undefined
+        }
+      >
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <h1>{data?.name ? data.name.toUpperCase() : null}</h1>
+          <h2> &nbsp; #{id}</h2>
+        </div>
+        <div className="image-container">
+          <img
+            src={data?.sprites.other["official-artwork"].front_default}
+            alt=""
+          />
+          <img
+            src={data?.sprites.other["official-artwork"].front_shiny}
+            alt=""
+          />
+        </div>
+        <div className="data-container">
+          <SectionTypeDetail
+            title="TYPE"
+            data={data?.types?.map(({ type }) => {
+              return { value1: type.name.toUpperCase() }
+            })}
+          />
+          <SectionDetail
+            title="ABILITIES"
+            data={data?.abilities?.map(({ ability }) => {
+              return {
+                value1: ability.name,
+              }
+            })}
+          />
+          <div className="stats-container">
+            <SectionDetail
+              title="STATS"
+              data={data?.stats?.map((stat) => {
+                return {
+                  value1: stat.stat.name,
+                  value2: stat.base_stat,
+                }
+              })}
+            />
+          </div>
+
+          <br />
         </div>
       </div>
     </div>
