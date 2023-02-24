@@ -1,5 +1,5 @@
 import React from "react"
-import ListOfPokemon from "../Components/ListOfPokemon"
+import ListOfPokemon from "../Components/ListOfPokemon/ListOfPokemon"
 import PokemonLogo from "../Images/Logo-Pokemon-500x313.png"
 
 const Pokedex = () => {
