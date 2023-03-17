@@ -1,17 +1,22 @@
-import React, { useContext, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import Loader from "../Loader/Loader"
 import { useFetchPokemon } from "../../Hooks/useFetchPokemon"
 import PokemonContext from "../../Context/PokemonContext"
-
 import SearchedPokemon from "./SearchedPokemon"
 import "./ListOfPokemon.css"
 import List from "./List"
+import { Page, initialContextState } from "../../types.d"
 
-export default function ListOfPokemon() {
-  const [page, setPage] = useState(null)
-  const { contextState } = useContext(PokemonContext)
-  const { pokemonList, loading, searchedData } = contextState
-  const { useFetchPokemonPage } = useFetchPokemon(page)
+export default function Main() {
+
+  const { globalState } = useContext(PokemonContext)
+  const { pokemonList, loading, searchedData, pokemonPage:globalPage } = globalState
+  const [actualPage, setActualPage] = useState<Page|undefined>(initialContextState.pokemonPage)
+  const fetchPokemons = useFetchPokemon()
+  useEffect(()=> {
+    fetchPokemons()
+  },[actualPage])
+
   return (
     <>
       {loading ? (
@@ -21,13 +26,12 @@ export default function ListOfPokemon() {
       ) : (
         <>
           <div className="external-container">
-            {searchedData ? (
+            {searchedData?.id? (
               <SearchedPokemon />
             ) : (
               <List
                 pokemonList={pokemonList}
-                useFetchPokemonPage={useFetchPokemonPage}
-                setPage={setPage}
+                setActualPage={setActualPage}
               />
             )}
           </div>

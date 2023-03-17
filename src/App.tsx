@@ -1,15 +1,13 @@
 import "./App.css"
 import PokemonDetail from "./Components/PokemonDetail/PokemonDetail"
-import Pokedex from "./Pages/Pokedex.js"
-import aas from "./Context/PokemonContext"
+import Pokedex from "./Pages/Pokedex"
 import { Route, Routes } from "react-router-dom"
-import { useState } from "react"
+import PokemonContextProvider from "./Context/PokemonContextProvider"
 
 function App() {
-  const [contextState, setContextState] = useState({})
   return (
     <div className="App">
-      <aas.Provider value={{ contextState, setContextState }}>
+      <PokemonContextProvider>
         <div className="pokedex">
           <Routes>
             <Route path="/" element={<Pokedex />} />
@@ -17,7 +15,7 @@ function App() {
             <Route path="*" element={<h1>Not found</h1>} />
           </Routes>
         </div>
-      </aas.Provider>
+      </PokemonContextProvider>
     </div>
   )
 }

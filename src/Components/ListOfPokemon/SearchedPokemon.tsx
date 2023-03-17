@@ -1,14 +1,14 @@
-import React, { useContext } from "react"
+import { useContext } from "react"
 import PokemonCard from "../PokemonCard"
 import backButtonImage from "../../Images/forth-button.png"
 import PokemonContext from "../../Context/PokemonContext"
 import Searcher from "./Searcher"
 export default function SearchedPokemon() {
-  const { contextState, setContextState } = useContext(PokemonContext)
-  const { searchedData } = contextState
+  const { globalState, setGlobalState } = useContext(PokemonContext)
+  const { searchedData } = globalState
 
   const getBackToPokemonList = () => {
-    setContextState({ ...contextState, searchedData: undefined })
+    if(setGlobalState)setGlobalState({ ...globalState, searchedData: undefined })
   }
 
   return (
@@ -24,10 +24,10 @@ export default function SearchedPokemon() {
           imageUrl={
             searchedData?.sprites.other["official-artwork"].front_default
           }
-          types={searchedData.types}
-          key={searchedData.id}
-          id={searchedData.id}
-          name={searchedData.name}
+          types={searchedData? searchedData.types: [{type: {name:''}}]}
+          key={searchedData?.id}
+          id={searchedData? searchedData.id: ''}
+          name={searchedData? searchedData.name: ''}
         />
       </div>
     </>

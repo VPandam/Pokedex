@@ -1,19 +1,36 @@
-import React, { useContext } from "react"
 import Searcher from "./Searcher"
 import PokemonCard from "../PokemonCard"
 import forthButtonImage from "../../Images/backButton.png"
 import backButtonImage from "../../Images/forth-button.png"
 import { scrollTop } from "../../Functions/functions"
+import { PokemonData } from "../../types"
+import { getURL } from "../../Services/Api"
+import { useContext } from "react"
+import PokemonContext from "../../Context/PokemonContext"
 
-export default function List({ pokemonList, setPage, useFetchPokemonPage }) {
+interface ListProps {
+  pokemonList: PokemonData[],
+  setActualPage: Function
+}
+
+const List:React.FC<ListProps> = ({ pokemonList, setActualPage}) => {
+  const {globalState, setGlobalState} = useContext(PokemonContext)
+  const {pokemonPage} = globalState
+  
   const handleClickNextPage = async () => {
-    const nextPage = useFetchPokemonPage?.next
-    setPage(nextPage)
-    scrollTop()
+    if(pokemonPage?.next){
+      const nextPageURL = pokemonPage?.next
+      const nextPage = await getURL(nextPageURL)
+      if(setGlobalState)setGlobalState({...globalState, pokemonPage: nextPage})
+      setActualPage(nextPage)
+      scrollTop()
+    }
   }
   const handleClickPrevPage = async () => {
-    const prevPage = useFetchPokemonPage?.previous
-    setPage(prevPage)
+    const prevPageURL = pokemonPage?.previous
+    const prevPage = await getURL(prevPageURL)
+    if(setGlobalState)setGlobalState({...globalState, pokemonPage: prevPage})    
+    setActualPage(prevPage)
     scrollTop()
   }
   return (
@@ -45,3 +62,5 @@ export default function List({ pokemonList, setPage, useFetchPokemonPage }) {
     </>
   )
 }
+
+export default List

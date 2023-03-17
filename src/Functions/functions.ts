@@ -5,11 +5,11 @@ export const scrollTop = () => {
   })
 }
 
-export const capitalizeWord = (word) => {
+export const capitalizeWord = (word:string) => {
   return word.charAt(0).toUpperCase() + word.slice(1)
 }
 
-export const getPokemonTypeStyle = (type) => {
+export const getPokemonTypeStyle = (type:string) => {
   switch (type) {
     case "water":
       return "rgba(0, 132, 255,1)"

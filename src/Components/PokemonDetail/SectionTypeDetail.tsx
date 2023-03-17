@@ -1,7 +1,13 @@
 import React from "react"
 import { getPokemonTypeStyle } from "../../Functions/functions"
+import { PokemonData } from "../../types"
 
-export default function SectionTypeDetail({ title, data }) {
+interface SectionTypeDetailProps {
+  title: string
+  data: {value1: string}[]|undefined
+    
+}
+const SectionTypeDetail:React.FC<SectionTypeDetailProps> = ({ title, data }) =>{
   return (
     <div className="section-type-container">
       <h2>{title}</h2>
@@ -16,7 +22,6 @@ export default function SectionTypeDetail({ title, data }) {
             >
               <p>
                 &nbsp;{data.value1.toUpperCase()}
-                &nbsp;{data.value2 ? data.value2 : null}
               </p>
             </li>
           )
@@ -25,3 +30,4 @@ export default function SectionTypeDetail({ title, data }) {
     </div>
   )
 }
+export default SectionTypeDetail

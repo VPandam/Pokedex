@@ -4,12 +4,14 @@ import { useGetPokemonDetailData } from "../../Hooks/useGetPokemonDetailData"
 import SectionDetail from "./SectionDetail"
 import { getPokemonTypeStyle } from "../../Functions/functions"
 import SectionTypeDetail from "./SectionTypeDetail"
-
+import BackImage from "../../Images/forth-button.png"
+import { Link } from "react-router-dom"
 function PokemonDetail() {
   const { id } = useParams()
   const { data } = useGetPokemonDetailData(id)
   return (
     <div className="container">
+
       <div
         className="pokemon-detail"
         style={
@@ -22,6 +24,9 @@ function PokemonDetail() {
             : undefined
         }
       >
+        <Link to={'/'}>
+          <img src={BackImage} alt="" />
+        </Link>
         <div style={{ display: "flex", alignItems: "center" }}>
           <h1>{data?.name ? data.name.toUpperCase() : null}</h1>
           <h2> &nbsp; #{id}</h2>
@@ -48,6 +53,7 @@ function PokemonDetail() {
             data={data?.abilities?.map(({ ability }) => {
               return {
                 value1: ability.name,
+                value2: null
               }
             })}
           />
